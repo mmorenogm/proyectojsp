@@ -1,26 +1,25 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            .rojo {color:red;}
+        </style>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Primera página JSP</h1>
         <%
-            // codigo java dentro de un servlet
-            //out nos permite escribir codigo java dentro de una`pag
-            out.println("esto es java");
-            out.println("<h1>titulo de java</h1>");
-            //se puede declarar variables
-            String texto = "Soy un texto escrito en java";
+            //CODIGO JAVA DENTRO DE UN SERVLET
+            //out NOS PERMITE ESCRIBIR CODIGO JAVA DENTRO DE LA PAGINA
+            out.println("Esto es Java!!!");
+            out.println("<h1 class='rojo'>Titulo de Java</h1>");
+            String texto = "Soy un texto escrito en Java";
         %>
-        <p>podemos escribir codigo java entre etiquetas HTML</p>
-        <h2> style="color:blue">
+        <p>Podemos escribir código Java entre etiquetas HTML</p>
+        <h2 style="color:blue">
             <%=texto%>
         </h2>
-        
     </body>
 </html>

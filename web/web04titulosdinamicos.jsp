@@ -13,7 +13,7 @@
             for (int i = 1; i<=6; i++){
                 //cerramos java y abrimos java
                 %>
-                 <h<%=i%>>Titulo <%=i%></h<%=i%>>   
+                 <h<%=i%> style='color:red'>Titulo <%=i%></h<%=i%>>   
                 <%
             }//end for
         %>
