@@ -46,7 +46,7 @@ Connection cn =
         String oficio = request.getParameter("oficio");
         if (oficio != null) {
             //hacemos el query para sacar los empleados
-            String sqlemp = "select * from emp where oficio = ?";
+            String sqlemp = "select * from emp where lower(oficio) = lower(?)";
             PreparedStatement pst = cn.prepareStatement(sqlemp);
             pst.setString(1, oficio);
             rs = pst.executeQuery();

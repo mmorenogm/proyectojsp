@@ -24,7 +24,7 @@
         <h1>Buscador Oficios JSP</h1>
         <form method="post">
             <label>Indicar un oficio:</label>
-            <input type="text" name="cajaoficio" style="text-transform: uppercase"/>   
+            <input type="text" name="cajaoficio"/>   
             <button type="submit">Buscar empleados</button>
         </form>
         <br/>
