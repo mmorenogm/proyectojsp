@@ -25,16 +25,36 @@ Connection cn = DriverManager.getConnection(cadena, "system", "oracle");
                 <%
                 String sqlfuncion = "select distinct funcion from plantilla";
                 Statement st = cn.createStatement();
-                ResultSet rs = st.executeQuery(sqlfuncion);
+                ResultSet rs = st.executeQuery(sqlfuncion);   
+                String seleccionado = request.getParameter("funcion");
                 while (rs.next()) {
-                    String fun = rs.getString("FUNCION");
-                    %>
-                    <li>
-                        <input type="radio" name="funcion" value="<%=fun%>"/><%=fun%>
-                    </li>
-                    <%
+                    String fun = rs.getString("FUNCION"); 
+                    if (seleccionado == null) {
+                        // no he seleccionado nada
+                        %>
+                        <li>
+                            <input type="radio" name="funcion" value="<%=fun%>"/><%=fun%>
+                        </li>
+                        <%
+                    }else {
+                        if(seleccionado.equals(fun)) {
+                        // he seleccionado
+                        %>
+                        <li>
+                            <input type="radio" name="funcion" value="<%=fun%>" checked/><%=fun%>
+                        </li>
+                        <% 
+                        } else {
+                        %>
+                        <li>
+                            <input type="radio" name="funcion" value="<%=fun%>" /><%=fun%>
+                        </li>
+                        <%
+                        }
+                        }
                 }// end while rs sqlfuncion
                 rs.close();
+                              
                 %>                
             </ul>
             <button type="submit">Mostrar plantilla</button>
