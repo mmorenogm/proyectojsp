@@ -1,4 +1,15 @@
-
+<%--
+Vista utilizada para esta practica
+create or replace view todosempleados as
+select apellido, oficio, salario
+from emp
+union
+select apellido, funcion, salario
+from plantilla
+union
+select apellido, especialidad, salario
+from doctor;
+--%>
 
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -10,7 +21,6 @@
 DriverManager.registerDriver(new OracleDriver());
 String cadena = "jdbc:oracle:thin:@LOCALHOST:1521:XE";
 Connection cn = DriverManager.getConnection(cadena, "system", "oracle");
-
 %>
 <!DOCTYPE html>
 <html>
@@ -24,45 +34,49 @@ Connection cn = DriverManager.getConnection(cadena, "system", "oracle");
         </style>
     </head>
     <body>
-        <h1>paginacion en grupo</h1>
-        <p>nos moveremos por paginas</p>
+        <h1>Total empleados hospital paginado en grupos</h1>
         <%
-        String sql = "select * from emp order by apellido";
+        String sqlempleados = "select * from todosempleados";
         Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_READ_ONLY);
-        ResultSet rs = st.executeQuery(sql);
-        String dato = request.getParameter("posicion");
-        int posicion = 1;
-        if (dato != null){
-            posicion = Integer.parseInt(dato);            
-        }
-        //averiguamos el numero de registros
-        rs.last();
-        int numregistros = rs.getRow();
-        //posicionamos el cursor enla fila de la posicion
-        rs.absolute(posicion);        
+        ResultSet rs = st.executeQuery(sqlempleados);
+        
+        //buscamos la posicion del cursor
+         String dato = request.getParameter("posicion");
+         int posicion = 1;
+         if (dato != null){
+             posicion = Integer.parseInt(dato);
+         }
+         // averiguamos el num de registros
+         rs.last();
+         int numregistros = rs.getRow();
+         //posicionamos el cursor en la posicion en la que se encuentra
+         rs.absolute(posicion);
         %>
         <table border="1">
             <thead>
                 <tr>
                     <th>Apellido</th>
-                    <th>Oficio</th>
+                    <th>Funcion</th>
                     <th>Salario</th>
                 </tr>
             </thead>
             <tbody>
                 <%
-                // pintamos registros de 5 en 5
-                for (int i=1; i<=5 && !rs.isAfterLast(); i++){
+                //vamos a pintar de 5 en 5
+                for (int i=1; i<=5 && !rs.isAfterLast(); i++) {
+                    String ape = rs.getString("APELLIDO");
+                    String fun = rs.getString("OFICIO");
+                    String sal = rs.getString("SALARIO");
                     %>
                     <tr>
-                        <td><%=rs.getString("APELLIDO")%></td>
-                        <td><%=rs.getString("OFICIO")%></td>
-                        <td><%=rs.getString("SALARIO")%></td>
+                        <td><%=ape%></td>
+                        <td><%=fun%></td>
+                        <td><%=sal%></td>
                     </tr>
                     <%
                     rs.next();
-                } // end for de 5 en 5
+                } // end pintar de 5 en 5
                 rs.close();
                 cn.close();
                 %>
@@ -71,17 +85,17 @@ Connection cn = DriverManager.getConnection(cadena, "system", "oracle");
             <ul id="menu">
                 <%
                 int numeropagina = 1;
-                for (int i = 1; i<=numregistros; i+=5) {
+                for (int i = 1; i<=numregistros; i+=5){
                     %>
                     <li>
-                        <a href="web23paginaciongrupo.jsp?posicion=<%=i%>">
-                            Página <%=numeropagina%>
+                        <a href="web25totalempleados.jsp?posicion=<%=i%>">
+                        pagina <%=numeropagina%>
                         </a>
                     </li>
                     <%
                     numeropagina += 1;
-                }// bucle para crear la paginacion dinamica
-                %>                
+                }// end for paginar
+                %>
             </ul>
     </body>
 </html>

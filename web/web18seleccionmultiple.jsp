@@ -9,7 +9,7 @@
     </head>
     <body>
         <h1>Seleccion Multiple - Checkbox - JSP</h1>
-        <p>valdira para cualquier seleccion multiple</p>
+        <p>valdria para cualquier seleccion multiple</p>
         <form method="post">
             <ul>
                 <li>
