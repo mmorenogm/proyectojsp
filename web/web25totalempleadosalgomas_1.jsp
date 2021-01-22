@@ -3,6 +3,7 @@ Esta es la solucion de PACO
 Realizar una vista en ORACLE llamada TODOSEMPLEADOS para poder 
 mostrar apellido, oficio/funcion/especialidad y salario 
 de todos los empleados de la bbdd. 
+INTENTO CORREGIR EL EFECTO DE CAMBIO DE SALARIO SI HE VISTADO UNA PAGINACION YA
 (Doctor, plantilla y emp)
 Paginar dicha vista en grupo.
 create view todosempleados
@@ -50,11 +51,13 @@ Connection cn =
         </form>
         <%
         String sql = "";
+        
         if(request.getParameter("cajasalario") == null){
             sql = "select * from todosempleados";
         }else {
             sql = "select * from todosempleados where salario > " 
                     + request.getParameter("cajasalario");
+            
         } // if para ver si tengo datos en la cajasalario
         Statement st = 
             cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -101,8 +104,9 @@ Connection cn =
         <ul id="menu">
             <%
             int numeropagina = 1;
+            String cajasalario = "";
             for (int i = 1; i <= numeroregistros; i+=5){
-                String cajasalario = request.getParameter("cajasalario");
+                cajasalario = request.getParameter("cajasalario");
                 if (cajasalario == null) {
                     // no recibimos salario y pintamos solo la posicion
                 %>
@@ -110,6 +114,7 @@ Connection cn =
                     <a href="web25totalempleadosalgomas.jsp?posicion=<%=i%>">
                         <%=numeropagina%>
                     </a>
+                    
                 </li>
                 <%
                 } else {
@@ -119,13 +124,21 @@ Connection cn =
                     <a href="web25totalempleadosalgomas.jsp?posicion=<%=i%>&cajasalario=<%=cajasalario%>">
                         <%=numeropagina%>
                     </a>
+                    <%
+                    posicion = 1;
+                    %>
                 </li>
                 <%
                 }    
                 numeropagina += 1;
             }
             %>
-        </ul>        
+        </ul>
+        <%
+        String estoy = request.getParameter("posicion");
+        out.println("El valor de posicion es " + estoy + " y en cajanumero hay " + cajasalario 
+        + " y numero de pagina es " + numeropagina);
+        %>
     </body>
 </html>
 

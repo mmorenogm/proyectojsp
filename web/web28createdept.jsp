@@ -7,6 +7,7 @@ En este caso incluimos la cadena de conexion
     Author     : mayte
 --%>
 
+<%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="oracle.jdbc.OracleDriver"%>
 <%@page import="java.sql.DriverManager"%>
@@ -32,12 +33,12 @@ Connection cn = DriverManager.getConnection(cadena, "system", "oracle");
                     <form method="post">
                         <div>
                             <label>Numero: </label>
-                            <input type="text" name="cajanumero"
+                            <input type="number" name="cajanumero"
                                    class="form-control"/>
                         </div>
                         <div>
                             <label>Nombre: </label>
-                            <input type="number" name="cajanombre"
+                            <input type="text" name="cajanombre"
                                    class="form-control"/>
                         </div>
                         <div>
@@ -55,8 +56,26 @@ Connection cn = DriverManager.getConnection(cadena, "system", "oracle");
                     String cajalocalidad = request.getParameter("cajalocalidad");
                     if(cajanumero != null ) {
                         int numero = Integer.parseInt(cajanumero);
-                        String sql = "insesrt into dept values (?,?,?)";
-                        
+                        String sql = "insert into dept values (?,?,?)";
+                        PreparedStatement pst = cn.prepareStatement(sql);
+                        pst.setInt(1, numero);
+                        pst.setString(2, cajanombre);
+                        pst.setString(3, cajalocalidad);
+                        int insertados = pst.executeUpdate();
+                        cn.close();
+                        //tenemos dos opciones:
+                        //1) mostramos un mensaje al usuario
+                        %>
+                        <h2 style="color:blue">Insertados = <%=insertados%></h2>
+                       
+                        //2) llevarnos a otra pagina, por ejemplo, index
+                        //para hacer redirecciones en java se utiliza la etiqu
+                        //eta forward que nos permite poder redireccionar a otra pagina
+                       
+                         <h2 style="color:blue">Insertados = <%=insertados%></h2>
+                         
+                         <jsp:forward page="web27indexdept.jsp"/>"
+                        <%
                     }
                     %>
                 </div>
