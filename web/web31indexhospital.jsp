@@ -48,8 +48,10 @@ Connection cn = DriverManager.getConnection(cadena, "system", "oracle");
         <section>
             <main role="main" class="container">
                 <div class="starter-template" >
-                    <h1>HOME hospitales</h1>
-                    
+                    <h1 id="cabecera">HOME hospitales</h1>
+                    <form method="post">
+                    <button type="button" id="botonsaludar">Saludar</button>
+                    </form>
                     <table class="table table-bordered">
                         <thead>
                             <tr class="bg-primary">
