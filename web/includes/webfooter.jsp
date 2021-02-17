@@ -3,9 +3,8 @@
 <script src="../js/bootstrap.bundle.min.js" type="text/javascript"></script>
 
  <script>
-      $(document).ready(function(){
-               $("#botonsaludar").click(function(){
-                      $("#cabecera").replaceWith("HOLA");
-                  }); //end botonsaludar
-      }); // end document
+     $("document").ready(function(){
+         alert("hola....");
+         
+     });
 </script>
